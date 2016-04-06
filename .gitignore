@@ -45,3 +45,23 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.gradle/2.8/taskArtifacts/fileSnapshots.bin
+.gradle/2.8/taskArtifacts/cache.properties.lock
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/gradle.xml
+.idea/encodings.xml
+.idea/libraries/appcompat_v7_23_1_1.xml
+build/intermediates/dex-cache/cache.xml
+.idea/vcs.xml
+.idea/libraries/support_annotations_23_1_1.xml
+.idea/misc.xml
+.idea/libraries/support_v4_23_1_1.xml
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/workspace.xml
+.gradle/2.8/taskArtifacts/cache.properties
+.gradle/2.8/taskArtifacts/fileHashes.bin
+.gradle/2.8/taskArtifacts/outputFileStates.bin
+.gradle/2.8/taskArtifacts/taskArtifacts.bin
