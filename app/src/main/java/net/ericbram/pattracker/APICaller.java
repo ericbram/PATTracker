@@ -216,7 +216,6 @@ public class APICaller {
         while ((inputLine = in.readLine()) != null)
         {
             lines += inputLine;
-            System.out.println(inputLine);
         }
         in.close();
 

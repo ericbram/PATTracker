@@ -8,11 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="net.ericbram.pat1.WizardActivity"
+    tools:context=".Activities.WizardActivity"
     tools:showIn="@layout/activity_wizard">
 
     <TextView
         android:layout_width="wrap_content"
+        android:id="@+id/introText"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Hi, it looks like you need some configuring!" />
@@ -20,8 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:id="@+id/introText2"
         android:text="First, what bus do you ride inbound and where do you get picked up?"
-        android:id="@+id/textView" />
+        />
 
     <Spinner
         android:layout_width="match_parent"

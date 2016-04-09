@@ -65,3 +65,9 @@ build/intermediates/dex-cache/cache.xml
 .gradle/2.8/taskArtifacts/fileHashes.bin
 .gradle/2.8/taskArtifacts/outputFileStates.bin
 .gradle/2.8/taskArtifacts/taskArtifacts.bin
+.gradle/2.10/taskArtifacts/cache.properties
+*.bin
+.gradle/2.10/taskArtifacts/cache.properties.lock
+.idea/libraries/hamcrest_core_1_3.xml
+build/generated/mockable-android-23.jar
+.idea/libraries/junit_4_12.xml

@@ -1,6 +1,9 @@
 package net.ericbram.pattracker.Activities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import net.ericbram.pattracker.APICaller;
 import net.ericbram.pattracker.Objects.Prediction;
@@ -34,9 +38,43 @@ public class WizardActivity extends AppCompatActivity implements OnDataSendToAct
         setContentView(R.layout.activity_wizard);
         _thisActivity = this;
         api = new APICaller();
-        api.ExecuteTask("getroutes", _thisActivity);
 
-        _inbound = true;
+        Intent intent = getIntent();
+        String inboundStr = intent.getExtras().getString("inbound");
+        _inbound = Boolean.parseBoolean(inboundStr);
+        TextView introText = (TextView)findViewById(R.id.introText2);
+        if (_inbound) {
+            introText.setText("First, what bus do you ride inbound and where do you get picked up?");
+        } else {
+            introText.setText("Great!  Now, what bus do you ride outbound and where do you get picked up?");
+        }
+
+        Button clickButton = (Button) findViewById(R.id.btnInboundNext);
+        clickButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                if (_inbound){
+                    editor.putString("inboundroute", _currentRoute);
+                    editor.putInt("inboundstop", _currentStop);
+                } else {
+                    editor.putString("outboundroute", _currentRoute);
+                    editor.putInt("outboundstop", _currentStop);
+                }
+                editor.apply();
+
+                if (_inbound) {
+                    Intent i = new Intent(v.getContext(), WizardActivity.class);
+                    i.putExtra("inbound", "false");
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
+        api.ExecuteTask("getroutes", _thisActivity);
     }
 
     @Override
@@ -55,7 +93,7 @@ public class WizardActivity extends AppCompatActivity implements OnDataSendToAct
                 routenames.add(routes.get(i).getRouteRouteDisplayName());
             }
         }
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, routenames); //selected item will look like a spinner set from XML
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, routenames); //selected item will look like a spinner set from XML
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(spinnerArrayAdapter);
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -88,7 +126,7 @@ public class WizardActivity extends AppCompatActivity implements OnDataSendToAct
                 stopnames.add(stops.get(i).getStopName());
             }
         }
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, stopnames); //selected item will look like a spinner set from XML
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, stopnames); //selected item will look like a spinner set from XML
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(spinnerArrayAdapter);
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -96,6 +134,7 @@ public class WizardActivity extends AppCompatActivity implements OnDataSendToAct
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (position != 0) {
                     Button btn = (Button)findViewById(R.id.btnInboundNext);
+                    _currentStop = _stops.get(position - 1).getStopId();
                     btn.setVisibility(View.VISIBLE);
                 }
             }

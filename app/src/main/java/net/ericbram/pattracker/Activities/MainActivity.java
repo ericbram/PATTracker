@@ -10,7 +10,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(this, WizardActivity.class));
+        Intent i = new Intent(this, WizardActivity.class);
+        i.putExtra("inbound", "true");
+        startActivity(i);
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
